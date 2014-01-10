@@ -2,21 +2,27 @@
 {% block content %}
 <section id="content">
 {% block content_title %}
-<h2>All articles</h2>
+<h2 class="hide">All articles</h2>
 {% endblock %}
 
-<ol id="post-list">
-{% for article in articles_page.object_list %}
-        <li><article class="hentry">
-                <header> <h2 class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></h2> </header>
-                <footer class="post-info">
-                    <abbr class="published" title="{{ article.date.isoformat() }}"> {{ article.locale_date }} </abbr>
-                    {% if article.author %}<address class="vcard author">By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a></address>{% endif %}
-                </footer><!-- /.post-info -->
-                <div class="entry-content"> {{ article.summary }} </div><!-- /.entry-content -->
-        </article></li>
-{% endfor %}
-</ol><!-- /#posts-list -->
+<div id="post-list">
+    {% for article in articles_page.object_list %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></span>
+        </div>
+        <div class="panel-body">
+            <p class="text-muted">
+            <small>
+            <abbr title="{{ article.date.isoformat() }}">{{ article.date|strftime("%Y-%m-%d %H:%M") }}</abbr> 
+            {% if article.author %}<span class="hidden">By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a></span>{% endif %}
+            </small>
+            </p>
+            <div class="entry-content"> {{ article.summary }} </div><!-- /.entry-content -->
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% include 'pagination.html' %}
 </section><!-- /#content -->
 {% endblock content %}
