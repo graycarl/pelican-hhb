@@ -1,28 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-<section id="content">
-{% block content_title %}
-<h2 class="hide">All articles</h2>
-{% endblock %}
 
-<div id="post-list">
+<div class="post-list">
     {% for article in articles_page.object_list %}
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <span class="entry-title"><a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a></span>
-        </div>
-        <div class="panel-body">
-            <p class="text-muted">
-            <small>
-            <abbr title="{{ article.date.isoformat() }}">{{ article.date|strftime("%Y-%m-%d %H:%M") }}</abbr> 
-            {% if article.author %}<span class="hidden">By <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a></span>{% endif %}
-            </small>
-            </p>
-            <div class="entry-content"> {{ article.summary }} </div><!-- /.entry-content -->
-        </div>
-    </div>
+    <article class="uk-article">
+        <h1 class="uk-article-title">
+            <a href="{{ SITEURL }}/{{ article.url }}" rel="bookmark" title="Permalink to {{ article.title|striptags }}">{{ article.title }}</a>
+        </h1>
+        <p class="uk-article-meta">Written by <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a> @ <abbr title="{{ article.date.isoformat() }}">{{ article.date|strftime("%Y-%m-%d %H:%M") }}</abbr></p>
+        <p class="uk-article-content"> {{ article.summary }} </p>
+        <p><a class="uk-button" href="{{ SITEURL }}/{{ article.url }}">Read On ...</a></p>
+        <hr class="uk-article-divider">
+    </article>
     {% endfor %}
 </div>
 {% include 'pagination.html' %}
-</section><!-- /#content -->
+
 {% endblock content %}

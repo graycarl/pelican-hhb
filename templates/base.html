@@ -5,11 +5,14 @@
         <title>{% block title %}{{ SITENAME }}{% endblock title %}</title>
         <meta charset="utf-8" />
 
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+        <!-- UIKIT -->
+        <link href="http://cdn.bootcss.com/uikit/2.0.0/css/uikit.min.css" rel="stylesheet">
+        <script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/uikit/2.0.0/js/uikit.min.js"></script>
         <!-- MyCSS -->
-        <link rel="stylesheet" href="/theme/css/hhb.css">
+        <link rel="stylesheet/less" type="text/css" href="/theme/css/hhb-uikit.less">
+        <script src="http://cdn.bootcss.com/less.js/1.6.0/less.min.js"></script>
+        <link href="http://fonts.googleapis.com/css?family=Nova+Script|Racing+Sans+One" rel="stylesheet" type="text/css">
         <!-- FEEDS -->
         {% if FEED_ALL_ATOM %}
         <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Full Atom Feed" />
@@ -38,43 +41,49 @@
         {% endblock head %}
 </head>
 
-<body id="index" class="home">
-    <header id="banner" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="{{ SITEURL or "/" }}">{{ SITENAME }} <strong>{{ SITESUBTITLE }}</strong></a>
+<body>
+    <header class="hhb-banner">
+        <hgroup>
+            <h1 class="uk-heading-large"><a href="{{ SITEURL or "/" }}">{{ SITENAME }}</a></h1>
+            <p>{{ SITESUBTITLE }}</p>
+        </hgroup>
+    </header>
+    <nav class="uk-navbar hhb-navbar">
+        <ul class="uk-navbar-nav">
+            {% for title, link in MENUITEMS %}
+            <li><a href="{{ link }}">{{ title|capitalize }}</a></li>
+            {% endfor %}
+            {% if DISPLAY_CATEGORIES_ON_MENU %}
+            {% for cat, null in categories %}
+            <li{% if cat == category %} class="uk-active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat|capitalize }}</a></li>
+            {% endfor %}
+            {% endif %}
+            {% if DISPLAY_PAGES_ON_MENU %}
+            {% for p in PAGES %}
+            <li{% if p == page %} class="uk-active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title|capitalize }}</a></li>
+            {% endfor %}
+            {% endif %}
+        </ul>
+        <!--
+        <div class="uk-navbar-content uk-navbar-flip">
+            <form class="uk-form uk-margin-remove uk-display-inline-block" action="">
+                <input type="text" placeholder="Search" />
+            </form>
         </div>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                {% for title, link in MENUITEMS %}
-                <li><a href="{{ link }}">{{ title }}</a></li>
-                {% endfor %}
-                {% if DISPLAY_CATEGORIES_ON_MENU %}
-                {% for cat, null in categories %}
-                <li{% if cat == category %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a></li>
-                {% endfor %}
-                {% endif %}
-                {% if DISPLAY_PAGES_ON_MENU %}
-                {% for p in PAGES %}
-                <li{% if p == page %} class="active"{% endif %}><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
-                {% endfor %}
-                {% endif %}
-            </ul>
-        </div>
+        -->
+    </nav>
+
+    <div class="hhb-content">
+        {% block content %}
+        {% endblock %}
     </div>
-    </header><!-- /#banner -->
-    <div class="container">
-        <div>
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
-    <footer id="contentinfo" class="footer">
+    <hr/>
+    <footer>
     <p>
     Proudly powered by <a href="http://getpelican.com/">Pelican</a>,
     which takes great advantage of <a href="http://python.org">Python</a>.
     </p>
-    </footer><!-- /#contentinfo -->
+    </footer>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
     {% include "baidu_tongji.html" %}
