@@ -9,7 +9,7 @@
         </h1>
         <p class="uk-article-meta">Written by <a class="url fn" href="{{ SITEURL }}/{{ article.author.url }}">{{ article.author }}</a> @ <abbr title="{{ article.date.isoformat() }}">{{ article.date|strftime("%Y-%m-%d %H:%M") }}</abbr></p>
         <p class="uk-article-content"> {{ article.summary }} </p>
-        <p><a class="uk-button" href="{{ SITEURL }}/{{ article.url }}">Read On ...</a></p>
+        <p><a class="uk-button read-on" href="{{ SITEURL }}/{{ article.url }}">Read On <i class="uk-icon-arrow-right"></i></a></p>
         <hr class="uk-article-divider">
     </article>
     {% endfor %}

@@ -1,20 +1,18 @@
 {% if DEFAULT_PAGINATION %}
-<p class="paginator">
-<ul class="pager">
+<ul class="uk-pagination">
     {% if articles_page.has_previous() %}
-    <li class="previous">
+    <li class="uk-pagination-previous">
         {% if articles_page.previous_page_number() == 1 %}
-            <a href="{{ SITEURL }}/{{ page_name }}.html">Newer</a>
+            <a href="{{ SITEURL }}/{{ page_name }}.html"><i class="uk-icon-angle-double-left"></i> Newer</a>
         {% else %}
-            <a href="{{ SITEURL }}/{{ page_name }}{{ articles_page.previous_page_number() }}.html">Newer</a>
+        <a href="{{ SITEURL }}/{{ page_name }}{{ articles_page.previous_page_number() }}.html"><i class="uk-icon-angle-double-left"></i> Newer</a>
         {% endif %}
     </li>
     {% endif %}
     {% if articles_page.has_next() %}
-    <li class="next">
-        <a href="{{ SITEURL }}/{{ page_name }}{{ articles_page.next_page_number() }}.html">Older</a>
+    <li class="uk-pagination-next">
+        <a href="{{ SITEURL }}/{{ page_name }}{{ articles_page.next_page_number() }}.html">Older <i class="uk-icon-angle-double-right"></i></a>
     </li>
     {% endif %}
 </ul>
-</p>
 {% endif %}
